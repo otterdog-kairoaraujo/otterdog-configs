@@ -1,0 +1,17 @@
+{
+    "defaults": {
+        "jsonnet": {
+            "base_template": "https://github.com/kairoaraujo/otterdog#examples/template/otterdog-defaults.libsonnet@main",
+            "config_dir": "orgs"
+        }
+    },
+    "github": {
+        "config_repo": ".otterdog"
+    },
+    "organizations": [
+        {
+            "name": "otterdog-kairoaraujo",
+            "github_id": "otterdog-kairoaraujo",
+        }
+    ]
+}
