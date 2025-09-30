@@ -3,11 +3,6 @@ name: Project Permissions Review
 on:
   workflow_call:
     inputs:
-      frequency_months:
-        description: 'Frequency of reviews in months'
-        required: false
-        type: number
-        default: 12
       issue_title:
         description: 'Custom issue title'
         required: false
