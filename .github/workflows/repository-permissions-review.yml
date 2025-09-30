@@ -3,36 +3,16 @@ name: Repository Permissions Review
 on:
   workflow_call:
     inputs:
-      projectName:
-        required: true
-        type: string
-        description: 'The name of the project for the review'
-      labels:
+      frequency_months:
+        description: 'Frequency of reviews in months'
         required: false
-        type: string
-        default: '[]'
-        description: 'JSON array of labels to apply to the issue (optional)'
-
+        type: number
+        default: 12
 jobs:
-  create-review-artifact:
+  trigger-review:
     runs-on: ubuntu-latest
     steps:
-      - name: Create review metadata
+      - name: Trigger Review
         run: |
-          mkdir -p review-data
-          cat > review-data/metadata.json << EOF
-          {
-            "projectName": "${{ inputs.projectName }}",
-            "labels": ${{ inputs.labels }}
-          }
-          EOF
-
-          echo "Created metadata for project: ${{ inputs.projectName }}"
-          cat review-data/metadata.json
-
-      - name: Upload repository review artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: repository-review-data
-          path: review-data/
-          retention-days: 1
+          echo "Triggering maintainer permissions review"
+          echo "Frequency: ${{ inputs.frequency_months }} months"
