@@ -1,0 +1,44 @@
+name: Project Permissions Review
+
+on:
+  workflow_call:
+    inputs:
+      frequency_months:
+        description: 'Frequency of reviews in months'
+        required: false
+        type: number
+        default: 12
+      issue_title:
+        description: 'Custom issue title'
+        required: false
+        type: string
+      issue_body:
+        description: 'Custom issue body in markdown format'
+        required: false
+        type: string
+
+jobs:
+  trigger-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Project Permissions Review
+        run: |
+          echo "Project Permissions Review"
+
+      - name: Create content artifact
+        if: inputs.issue_title != '' || inputs.issue_body != ''
+        run: |
+          mkdir -p artifact
+          cat > artifact/content.json <<'EOF'
+          {
+            "title": "${{ inputs.issue_title }}",
+            "body": ${{ toJSON(inputs.issue_body) }}
+          }
+          EOF
+
+      - name: Upload content artifact
+        if: inputs.issue_title != '' || inputs.issue_body != ''
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+        with:
+          name: project-permissions-review-content
+          path: artifact/
